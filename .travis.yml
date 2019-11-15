@@ -22,3 +22,15 @@ after_success:
   - docker push sashamihalache/multi-nginx
   - docker push sashamihalache/multi-server
   - docker push sashamihalache/multi-worker
+
+deploy:
+  provider: elasticbeanstalk
+  region: us-east-1
+  app: docker-multi
+  env: DockerMulti-env
+  bucket_name: elasticbeanstalk-us-east-1-714959141112
+  bucket_path: multi-docker
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY 
