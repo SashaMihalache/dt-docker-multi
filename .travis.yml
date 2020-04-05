@@ -1,0 +1,22 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t sashamihalache/dt-docker-multi-client-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true sashamihalache/dt-docker-multi-client-test npm test
+
+after_success:
+  - docker build -t sashamihalache/dt-docker-multi-client ./client
+  - docker build -t sashamihalache/dt-docker-multi-nginx ./nginx
+  - docker build -t sashamihalache/dt-docker-multi-worker ./worker
+  - docker build -t sashamihalache/dt-docker-multi-api ./api
+  # Login to the docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Take those images and push them to the docker hub
+  - docker push sashamihalache/dt-docker-multi-client
+  - docker push sashamihalache/dt-docker-multi-nginx
+  - docker push sashamihalache/dt-docker-multi-worker
+  - docker push sashamihalache/dt-docker-multi-api
