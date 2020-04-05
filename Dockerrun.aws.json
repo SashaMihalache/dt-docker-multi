@@ -1,0 +1,36 @@
+{
+  "AWSEBDockerrunVersion": "2",
+  "containerDefinitions": [
+    {
+      "name": "nginx",
+      "image": "sashamihalache/dt-docker-multi-nginx",
+      "hostname": "nginx",
+      "essential": true,
+      "portMappings": [
+        {
+          "hostPort": 80,
+          "containerPort": 80
+        }
+      ],
+      "links": ["client", "api"]
+    },
+    {
+      "name": "client",
+      "image": "sashamihalache/dt-docker-multi-client",
+      "hostname": "client",
+      "essential": false
+    },
+    {
+      "name": "api",
+      "image": "sashamihalache/dt-docker-multi-api",
+      "hostname": "api",
+      "essential": false
+    },
+    {
+      "name": "worker",
+      "image": "sashamihalache/dt-docker-multi-worker",
+      "hostname": "worker",
+      "essential": false
+    }
+  ]
+}
