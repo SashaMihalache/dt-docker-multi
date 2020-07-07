@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 services:
   nginx:
     restart: always
@@ -6,11 +6,13 @@ services:
       dockerfile: Dockerfile.dev
       context: ./nginx
     ports:
-      - '8080:80'
+      - "8080:80"
   postgres:
-    image: 'postgres:latest'
+    image: "postgres:11-alpine"
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: trust
   redis:
-    image: 'redis:latest'
+    image: "redis:latest"
   api:
     build:
       dockerfile: Dockerfile.dev
